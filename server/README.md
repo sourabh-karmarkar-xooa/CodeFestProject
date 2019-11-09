@@ -4,62 +4,17 @@
 
 ### Database Commands
 
-- Run the following commands in MYSQL CLI
+- Export .sql file
+  - mysqldump -u root -p STATIONERY_MANAGEMENT > STATIONERY_MANAGEMENT.sql
 
-```
-CREATE DATABASE IF NOT EXISTS STATIONERY_MANAGEMENT;
-```
-
-```
-use STATIONERY_MANAGEMENT;
-```
-
-
-```
-CREATE TABLE IF NOT EXISTS INVENTORY_DETAILS 
-  ( 
-     id           INT NOT NULL auto_increment, 
-     category     VARCHAR(50) NOT NULL, 
-     label        VARCHAR(50) NOT NULL, 
-     availableqty INT NOT NULL, 
-     imgurl       VARCHAR(50) NOT NULL, 
-     PRIMARY KEY ( id ) 
-  ); 
-```
-
-```
-INSERT INTO INVENTORY_DETAILS 
-VALUES      (1, 
-             "pen", 
-             "blue pen", 
-             20, 
-             "path"), 
-            (2, 
-             "marker", 
-             "blue marker", 
-             25, 
-             "path"), 
-            (3, 
-             "marker", 
-             "black marker", 
-             30, 
-             "path"), 
-            (4, 
-             "duster", 
-             "duster", 
-             13, 
-             "path"), 
-            (5, 
-             "notepad", 
-             "notepad", 
-             0, 
-             "path"), 
-            (6, 
-             "stick notes", 
-             "stick notes pink", 
-             10, 
-             "path"); 
-```
+- Import .sql file
+  ```
+    CREATE DATABASE IF NOT EXISTS STATIONERY_MANAGEMENT;
+  ```
+  - run the following command to load all the tables and data
+  ```
+    mysql -u root -p STATIONERY_MANAGEMENT < STATIONERY_MANAGEMENT.sql
+  ```
 
 ### Setup and Run
 
