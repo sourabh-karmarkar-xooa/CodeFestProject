@@ -73,3 +73,10 @@ export const onCurrentlySelectedItemChanged = (item) => {
         payload:item
     }
 }
+
+export const onItemQuantityChanged = (itemId,quantity) => {
+    return {
+        type:ON_SELECTION_CHANGED,
+        payload:{itemId,quantity}
+    }
+}
