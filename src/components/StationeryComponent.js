@@ -6,6 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from "react-redux";
 import {getInventory} from '../actions/stationery';
 import SelectedItemComponent from './SelectedItemComponent';
+import StationeryCategeoryComponent from './StationeryCategeoryComponent';
+import _ from 'lodash';
 
 
 class StationeryComponent extends React.Component {
@@ -15,16 +17,40 @@ class StationeryComponent extends React.Component {
         getInventory();
     }
 
+    getCategoryData = () =>{
+        const {inventories} = this.props;
+        const categoryData = {};
+        _.each(inventories,(inventory)=>{
+                if(!categoryData[inventory.category]){
+                    categoryData[inventory.category] = [];
+                }
+                categoryData[inventory.category].push(inventory);
+        });
+        return categoryData;
+    }
+
+
+
     render(){
-            // const {inventories} = this.props;
+            const categoryData = this.getCategoryData();
             return  (
                 <React.Fragment>
                     <CssBaseline />
-                    <Container fixed>
+                    <Container maxWidth="xl">
                         <Grid container spacing={3}>
                             <Grid item xs={9}>
-                                <Paper>
-                                    Items....
+                                <Paper style={{margin:10,padding:10}}>
+                                    {
+                                        _.map(_.keys(categoryData),(category)=>
+                                            <StationeryCategeoryComponent key={category}
+                                                                          category={
+                                                                              {
+                                                                                  name:category,
+                                                                                  items:categoryData[category]
+                                                                              }
+                                                                          }/>
+                                        )
+                                    }
                                 </Paper>
                             </Grid>
                             <Grid item xs={3}>

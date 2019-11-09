@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 class SelectedItemComponent extends React.Component {
 
     render(){
-        return <Paper>
+        return <Paper style={{margin:10,padding:10}}>
             <Typography variant="h5" component="h3">
                 No Item Selected
             </Typography>
