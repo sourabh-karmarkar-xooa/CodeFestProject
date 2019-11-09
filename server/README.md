@@ -7,11 +7,16 @@
 - Run the following commands in MYSQL CLI
 
 ```
-CREATE DATABASE IF NOT EXISTS stationerymanagement;
+CREATE DATABASE IF NOT EXISTS STATIONERY_MANAGEMENT;
 ```
 
 ```
-CREATE TABLE IF NOT EXISTS inventory_details 
+use STATIONERY_MANAGEMENT;
+```
+
+
+```
+CREATE TABLE IF NOT EXISTS INVENTORY_DETAILS 
   ( 
      id           INT NOT NULL auto_increment, 
      category     VARCHAR(50) NOT NULL, 
@@ -23,7 +28,7 @@ CREATE TABLE IF NOT EXISTS inventory_details
 ```
 
 ```
-INSERT INTO inventory_details 
+INSERT INTO INVENTORY_DETAILS 
 VALUES      (1, 
              "pen", 
              "blue pen", 
