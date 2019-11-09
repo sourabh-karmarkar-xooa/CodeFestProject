@@ -70,5 +70,5 @@ npm install
 - Add MYSQL password in config.js file
 
 ```
-node server.js
+nodemon server.js
 ```
