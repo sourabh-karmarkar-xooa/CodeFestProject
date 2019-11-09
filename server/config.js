@@ -2,7 +2,7 @@ let config = {
 	databaseDetail: {
 		host: "localhost",
 		user: "root",
-		password: "jennyparthmahesh",
+		password: "",
 		database: "STATIONERY_MANAGEMENT"
 	},
 	PORT: 3000
