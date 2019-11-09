@@ -2,6 +2,7 @@ let express = require("express");
 let server = express();
 let bodyParser = require("body-parser");
 const inventory = require("./routes/inventoryRoute");
+const { config } = require("./config");
 
 server.use(bodyParser.json());
 server.use(
@@ -9,7 +10,6 @@ server.use(
 		extended: true
 	})
 );
-const PORT = 3000;
 
 // Default route
 server.get("/", function(req, res) {
@@ -19,7 +19,7 @@ server.get("/", function(req, res) {
 server.use("/inventory", inventory);
 
 // Set port
-server.listen(PORT, function() {
+server.listen(config.PORT, function() {
 	console.log("Node server is running on port 3000");
 });
 
