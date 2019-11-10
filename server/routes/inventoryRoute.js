@@ -36,4 +36,29 @@ router.get("/:id", function(req, res) {
 	});
 });
 
+// Add a new inventory item
+router.post("/", function(req, res) {
+	let stationeryItem = req.body.stationeryItem;
+	if (!stationeryItem) {
+		return res.status(400).send({ error: true, message: "Please provide stationery item" });
+	}
+
+	let insertItemQuery =
+		"INSERT INTO INVENTORY_DETAILS(category,label,availableQty,imgURL) VALUES('" +
+		stationeryItem.category +
+		"','" +
+		stationeryItem.label +
+		"'," +
+		stationeryItem.availableQty +
+		",'" +
+		stationeryItem.availableQty +
+		"');";
+	dbConn.query(insertItemQuery, function(error, result, fields) {
+		if (error) {
+			return res.status(400).send({ error: true, message: "Some Error Occured" });
+		}
+		return res.send({ error: false, message: "New item added successfully." });
+	});
+});
+
 module.exports = router;
