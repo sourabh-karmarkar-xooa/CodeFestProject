@@ -22,7 +22,7 @@ server.use("/stationeryRequest", stationeryRequest);
 
 // Set port
 server.listen(config.PORT, function() {
-	console.log("Node server is running on port 3000");
+	console.log("Node server is running on port " + config.PORT);
 });
 
 module.exports = server;

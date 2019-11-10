@@ -5,7 +5,7 @@ let config = {
 		password: "",
 		database: "STATIONERY_MANAGEMENT"
 	},
-	PORT: 3000
+	PORT: 8000
 };
 
 const errorObj = { error: true, message: "Some Error Occured" };
