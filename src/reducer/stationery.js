@@ -1,11 +1,13 @@
-import {ON_INVENTORY_RECEIVED,ON_SELECTION_CHANGED} from '../constant';
+import {ON_INVENTORY_RECEIVED,ON_SELECTION_CHANGED,
+    ON_CURRENT_ITEM_SELECTION_CHANGED} from '../constant';
 import {createReducer} from "../util";
 import _ from 'lodash';
 
 const initialState = {
     stationeryInventory: [],
     stationeryHistory: [],
-    selectedItems: {}
+    selectedItems: {},
+    currentlySelectedItem:null
 };
 
 export default createReducer(initialState, {
@@ -33,5 +35,9 @@ export default createReducer(initialState, {
                 selectedItems: newSelectedItems
             });
         }
-    }
+    },
+    [ON_CURRENT_ITEM_SELECTION_CHANGED]: (state,payload) =>
+        Object.assign({}, state, {
+            currentlySelectedItem: payload
+        })
 });
