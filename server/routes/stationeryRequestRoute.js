@@ -1,13 +1,8 @@
 let express = require("express");
 let router = express.Router();
-let mysql = require("mysql");
-const { config } = require("../config");
+const dbConn = require("../connect");
+const { errorObj } = require("../config");
 
-// Connection configurations
-let dbConn = mysql.createConnection(config.databaseDetail);
-// Connect to database
-dbConn.connect();
-const errorObj = { error: true, message: "Some Error Occured" };
 // Retrieve all request details
 router.get("/", function(req, res) {
 	dbConn.query("SELECT * FROM EMPLOYEE_REQUESTS", function(employeeRequestError, employeeRequests, fields) {
@@ -95,6 +90,63 @@ router.get("/:id", function(req, res) {
 			};
 			res.setHeader("Content-Type", "application/json");
 			let finalResultObj = { error: false, data: requestObj, message: "single stationery request" };
+			return res.json(finalResultObj);
+		});
+	});
+});
+
+// Place a request
+router.post("/", function(req, res) {
+	let stationeryRequestObject = req.body.stationeryRequestObject;
+	if (!stationeryRequestObject) {
+		return res.status(400).send({ error: true, message: "Invalid stationery request" });
+	}
+	let createdDate = stationeryRequestObject.created_date;
+	let convertedDateObj = new Date(createdDate).toISOString().slice(0, 19).replace("T", " ");
+	let emp_id = stationeryRequestObject.emp_id;
+	let status = stationeryRequestObject.status;
+	let sign = "SIGN";
+	let itemQuantityList = stationeryRequestObject.item;
+
+	/**
+	 * Inserting into employee request table
+	 */
+	let insertEmployeeRequest =
+		"INSERT INTO EMPLOYEE_REQUESTS(created_date,emp_id,status,sign) VALUES('" +
+		convertedDateObj +
+		"'," +
+		emp_id +
+		",'" +
+		status +
+		"','" +
+		sign +
+		"');";
+	dbConn.query(insertEmployeeRequest, function(employeeRequestError, employeeRequestResult, fields) {
+		if (employeeRequestError) {
+			return res.status(400).send(errorObj);
+		}
+
+		/**
+		 * Inserting values into request detail table
+		 */
+		let employeeRequestId = employeeRequestResult.insertId;
+		let itemCountArray = [];
+		for (let itemCounter = 0; itemCounter < itemQuantityList.length; itemCounter++) {
+			let itemObj = itemQuantityList[itemCounter];
+			let itemCountList = "(" + employeeRequestId + "," + itemObj.item_id + "," + itemObj.quantity + ")";
+			itemCountArray.push(itemCountList);
+		}
+		if (!itemCountArray.length) {
+			return res.status(400).send({ error: true, message: "Invalid stationery request" });
+		}
+		let insertRequestDetail =
+			"INSERT INTO REQUEST_DETAIL(req_id,item_id,item_quantity) VALUES" + itemCountArray.join(",") + ";";
+		dbConn.query(insertRequestDetail, function(requestDetailError, requestDetailResult, fields) {
+			if (requestDetailError) {
+				return res.status(400).send(errorObj);
+			}
+			res.setHeader("Content-Type", "application/json");
+			let finalResultObj = { error: false, message: "Stationery request placed successfully" };
 			return res.json(finalResultObj);
 		});
 	});
