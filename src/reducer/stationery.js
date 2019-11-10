@@ -6,7 +6,7 @@ import _ from 'lodash';
 const initialState = {
     stationeryInventory: [],
     stationeryHistory: [],
-    selectedItems: {1:2},
+    selectedItems: {},
     currentlySelectedItem:null
 };
 
