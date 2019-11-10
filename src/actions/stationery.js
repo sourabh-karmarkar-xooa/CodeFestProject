@@ -65,11 +65,18 @@ export const getInventory = () => (dispatch) => {
             ]
         })
     },1000);
-}
+};
 
 export const onCurrentlySelectedItemChanged = (item) => {
     return {
         type:ON_CURRENT_ITEM_SELECTION_CHANGED,
         payload:item
     }
-}
+};
+
+export const onItemQuantityChanged = (itemId,quantity) => {
+    return {
+        type:ON_SELECTION_CHANGED,
+        payload:{itemId,quantity}
+    }
+};

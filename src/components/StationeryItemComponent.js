@@ -12,7 +12,7 @@ import { red } from '@material-ui/core/colors';
 import { withStyles } from '@material-ui/core/styles';
 import {connect} from "react-redux";
 import TextField from '@material-ui/core/TextField';
-import {onCurrentlySelectedItemChanged} from "../actions/stationery";
+import {onCurrentlySelectedItemChanged,onItemQuantityChanged} from "../actions/stationery";
 
 const useStyles = {
     card: {
@@ -52,6 +52,11 @@ class StationeryItemComponent extends React.Component {
         }
     }
 
+    onQuantityChanged = (e) => {
+        const {currentlySelectedItem,onItemQuantityChanged} = this.props;
+        onItemQuantityChanged(currentlySelectedItem.id,parseInt(e.target.value));
+    }
+
     onItemSelected = () => {
         const {item} = this.props;
         this.props.onCurrentlySelectedItemChanged(item);
@@ -89,12 +94,14 @@ class StationeryItemComponent extends React.Component {
                 {
                     selectedBorder !== 1 && <TextField
                         fullWidth
+                        value={selectedQty}
                         id="outlined-basic"
                         className={classes.textField}
                         label="Quantity"
                         margin="normal"
                         type="number"
                         variant="filled"
+                        onChange={this.onQuantityChanged}
                     />
                 }
             </Card>
@@ -113,6 +120,7 @@ const mapStateToProps = (state) => {
 export default connect(
     mapStateToProps,
     {
-        onCurrentlySelectedItemChanged
+        onCurrentlySelectedItemChanged,
+        onItemQuantityChanged
     }
 )(withStyles(useStyles)(StationeryItemComponent));
