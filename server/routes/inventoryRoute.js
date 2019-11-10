@@ -1,18 +1,13 @@
 let express = require("express");
 let router = express.Router();
-let mysql = require("mysql");
-const { config } = require("../config");
-
-// Connection configurations
-let dbConn = mysql.createConnection(config.databaseDetail);
-// Connect to database
-dbConn.connect();
+const dbConn = require("../connect");
+const { errorObj } = require("../config");
 
 // Retrieve all item details
 router.get("/", function(req, res) {
-	dbConn.query("SELECT * FROM INVENTORY_DETAILS", function(error, results, fields) {
+	dbConn.query("SELECT * FRM INVENTORY_DETAILS", function(error, results, fields) {
 		if (error) {
-			return res.status(400).send({ error: true, message: "Some Error Occured" });
+			return res.status(400).send(errorObj);
 		}
 		res.setHeader("Content-Type", "application/json");
 		return res.json({ error: false, data: results, message: "inventory list" });
@@ -29,7 +24,7 @@ router.get("/:id", function(req, res) {
 
 	dbConn.query("SELECT * FROM INVENTORY_DETAILS where id=?", item_Id, function(error, results, fields) {
 		if (error) {
-			return res.status(400).send({ error: true, message: "Some Error Occured" });
+			return res.status(400).send(errorObj);
 		}
 		res.setHeader("Content-Type", "application/json");
 		return res.json({ error: false, data: results[0], message: "item details" });
@@ -55,7 +50,7 @@ router.post("/", function(req, res) {
 		"');";
 	dbConn.query(insertItemQuery, function(error, result, fields) {
 		if (error) {
-			return res.status(400).send({ error: true, message: "Some Error Occured" });
+			return res.status(400).send(errorObj);
 		}
 		return res.send({ error: false, message: "New item added successfully." });
 	});

@@ -8,4 +8,6 @@ let config = {
 	PORT: 3000
 };
 
-module.exports = { config };
+const errorObj = { error: true, message: "Some Error Occured" };
+
+module.exports = { config, errorObj };

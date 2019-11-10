@@ -1,13 +1,8 @@
 let express = require("express");
 let router = express.Router();
-let mysql = require("mysql");
-const { config } = require("../config");
+const dbConn = require("../connect");
+const { errorObj } = require("../config");
 
-// Connection configurations
-let dbConn = mysql.createConnection(config.databaseDetail);
-// Connect to database
-dbConn.connect();
-const errorObj = { error: true, message: "Some Error Occured" };
 // Retrieve all request details
 router.get("/", function(req, res) {
 	dbConn.query("SELECT * FROM EMPLOYEE_REQUESTS", function(employeeRequestError, employeeRequests, fields) {
