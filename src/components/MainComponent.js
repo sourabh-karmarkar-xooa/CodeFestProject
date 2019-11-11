@@ -60,7 +60,6 @@ class MainComponent extends React.Component {
         const {user, classes} = this.props;
         return (
             <div className={classes.root}>
-                <Router>
                     <AppBar position="fixed">
                         <Toolbar>
                             <Typography variant="h6" className={classes.title}>
@@ -128,7 +127,6 @@ class MainComponent extends React.Component {
                             <div>History</div>
                         </Route>
                     </Switch>
-                </Router>
 
             </div>
         );

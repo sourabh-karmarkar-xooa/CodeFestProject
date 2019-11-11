@@ -15,8 +15,8 @@ import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
 import {
-    validateLoginCredentials,
-  } from "../actions/login";
+  login,
+} from "../actions/stationery";
 
 const styles = theme => ({
   root: {
@@ -120,6 +120,11 @@ export class LoginComponent extends Component {
     loginPassword: "",
     passwordVisibility: false
   };
+
+  onLogin = () => {
+    const {loginEmail,loginPassword} = this.state;
+    this.props.login(loginEmail,loginPassword);
+  }
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -240,12 +245,7 @@ export class LoginComponent extends Component {
                    
                   </div>
                   <Button
-                    onClick={() =>
-                      this.props.validateLoginCredentials(
-                        this.state,
-                        this.props.history.push
-                      )
-                    }
+                    onClick={this.onLogin}
                     id="login"
                     type="button"
                     variant="contained"
@@ -290,17 +290,11 @@ export class LoginComponent extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => {
-    return {
-      validateLoginCredentials: (loginCredentials, historyPush) => {
-        dispatch(validateLoginCredentials(loginCredentials, historyPush))
-      }
+
+
+
+export default withStyles(styles)(connect(null,
+    {
+      login
     }
-}
-
-
-// export default withStyles(styles)(withRouter(LoginComponent));
-
-  export default withStyles(styles)(connect(null,
-    mapDispatchToProps
 )(withRouter(LoginComponent)));

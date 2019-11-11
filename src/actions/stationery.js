@@ -1,5 +1,5 @@
 import {ON_INVENTORY_RECEIVED,ON_SELECTION_CHANGED,
-    ON_CURRENT_ITEM_SELECTION_CHANGED} from '../constant';
+    ON_CURRENT_ITEM_SELECTION_CHANGED,ON_LOGIN_SUCCESS} from '../constant';
 
 export const getInventory = () => (dispatch) => {
     setTimeout(()=>{
@@ -80,3 +80,15 @@ export const onItemQuantityChanged = (itemId,quantity) => {
         payload:{itemId,quantity}
     }
 };
+
+export const login = (userId,password) => dispatch => {
+    setTimeout(()=>{
+        dispatch({type:ON_LOGIN_SUCCESS,
+            payload:{
+                id:1,
+                name:'Yogesh Patel',
+                photo:'https://specials-images.forbesimg.com/imageserve/5d3d7a55f1176b000897d627/960x0.jpg?fit=scale'
+            }
+        })
+    },1000);
+}
